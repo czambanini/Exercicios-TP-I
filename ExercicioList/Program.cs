@@ -27,12 +27,12 @@
             //método de filtragem
             List<string> FiltrarLista(List<string> lista)
             {
-                List<string> listaFiltrada = new List<string> ();
+                List<string> listaFiltrada = new List<string>();
                 foreach (var item in lista)
                 {
                     if (item.Length >= 10)
                     {
-                        listaFiltrada.Add (item);
+                        listaFiltrada.Add(item);
                     }
                 }
                 return listaFiltrada;
