@@ -26,16 +26,16 @@
                 //Console.WriteLine(explosao);
                 while (participantes.Count > 1)
                 {
-                int explosao = random.Next(1, 51);
-                Console.WriteLine($"BATATA...");
-                for (int i = 0; i < (explosao - 1); i++)
-                {
-                    Console.WriteLine($"({participantes.Peek()}) quente...");
-                    participantes.Enqueue(participantes.Peek());
+                    int explosao = random.Next(1, 51);
+                    Console.WriteLine($"BATATA...");
+                    for (int i = 0; i < (explosao - 1); i++)
+                    {
+                        Console.WriteLine($"({participantes.Peek()}) quente...");
+                        participantes.Enqueue(participantes.Peek());
+                        participantes.Dequeue();
+                    }
+                    Console.WriteLine($"{participantes.Peek()} QUEIMOU!");
                     participantes.Dequeue();
-                }
-                Console.WriteLine($"{participantes.Peek()} QUEIMOU!");
-                participantes.Dequeue();
                 }
 
                 Console.WriteLine($"{participantes.Peek()} venceu!");

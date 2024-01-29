@@ -6,10 +6,11 @@
         {
             Console.Write("Escreva uma expressão matemática:");
             string expressao = Console.ReadLine();
-            AnaliseDaExpressao(expressao);
-
+            // AnaliseDaExpressao(expressao);
+            AnaliseDaExpressao2(expressao);
 
             //método de criação da pilha
+            // Na implementação anterior havia um pequeno bug que marcava como válida expressões com múltiplos caracteres de fechamento
             void AnaliseDaExpressao(string expressao)
             {
                 Stack<char> aberturas = new Stack<char>();
@@ -21,15 +22,27 @@
                     }
                     if (item == ')')
                     {
-                        if (aberturas.Peek() == '(') aberturas.Pop();
+                        if (!EstaVazia(aberturas))
+                        {
+                            if (aberturas.Peek() == '(') aberturas.Pop(); else ExpressaoInvalida();
+                        }
+                        else ExpressaoInvalida();
                     }
                     if (item == '}')
                     {
-                        if (aberturas.Peek() == '{') aberturas.Pop();
+                        if (!EstaVazia(aberturas))
+                        {
+                            if( aberturas.Peek() == '{') aberturas.Pop(); else ExpressaoInvalida();
+                        }
+                        else ExpressaoInvalida();
                     }
                     if (item == ']')
                     {
-                        if (aberturas.Peek() == '[') aberturas.Pop();
+                        if (!EstaVazia(aberturas))
+                        {
+                            if (aberturas.Peek() == '[') aberturas.Pop(); else ExpressaoInvalida();
+                        }
+                        else ExpressaoInvalida();
                     }
                 }
 
@@ -45,6 +58,42 @@
                 return false;
             }
 
+            //método para encerrar o processamento de uma expressão inválida
+            void ExpressaoInvalida()
+            {
+                Console.WriteLine("Expressão inválida");
+                Environment.Exit(-1);
+            }
+
+            // Implementação alternativa com menos ifs, mais fácil de ler
+            // Usa também a estrutura de dicionário
+            void AnaliseDaExpressao2(string expressao)
+            {
+                Console.WriteLine("IMPLEMENTAÇÃO ALTERNATIVA");
+
+                Dictionary<char, char> caracteres = new() 
+                {
+                    { '(',')' },
+                    { '{','}' },
+                    { '[',']' }
+                };
+                Stack<char> aberturas = new Stack<char>();
+
+                for (int i = 0; i < expressao.Length; i++)
+                {
+                    var caractere = expressao[i];
+
+                    if (caracteres.ContainsKey(caractere))
+                        aberturas.Push(caractere);
+
+                    if (caracteres.ContainsValue(caractere))
+                        if (EstaVazia(aberturas) || aberturas.Pop() != caractere)
+                            ExpressaoInvalida();
+
+                }
+
+                Console.WriteLine("Expressão válida");
+            }
         }
     }
 }
